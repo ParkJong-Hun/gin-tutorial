@@ -6,11 +6,13 @@ import (
 	"gitlab.com/ParkJong-Hun/gin-tutorial/entity"
 	"gitlab.com/ParkJong-Hun/gin-tutorial/service"
 	"gitlab.com/ParkJong-Hun/gin-tutorial/validators"
+	"net/http"
 )
 
 type VideoController interface {
 	FindAll() []entity.Video
 	Save(ctx *gin.Context) error
+	ShowAll(ctx *gin.Context)
 }
 
 type controller struct {
@@ -43,4 +45,13 @@ func (controller *controller) Save(ctx *gin.Context) error {
 	}
 	controller.service.Save(video)
 	return nil
+}
+
+func (controller *controller) ShowAll(ctx *gin.Context) {
+	videos := controller.service.FindAll()
+	data := gin.H{
+		"title":  "Video Page",
+		"videos": videos,
+	}
+	ctx.HTML(http.StatusOK, "index.html", data)
 }
