@@ -1,4 +1,4 @@
-module gitlab.com/pragmaticreviews/golang-gin-poc
+module gitlab.com/ParkJong-Hun/gin-tutorial
 
 go 1.23.4
 
