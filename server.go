@@ -5,6 +5,8 @@ import (
 	"gitlab.com/ParkJong-Hun/gin-tutorial/controller"
 	"gitlab.com/ParkJong-Hun/gin-tutorial/middlewares"
 	"gitlab.com/ParkJong-Hun/gin-tutorial/service"
+	"io"
+	"os"
 )
 
 var (
@@ -12,7 +14,14 @@ var (
 	videoController controller.VideoController = controller.New(videoService)
 )
 
+func setupLogOutPut() {
+	file, _ := os.Create("gin.log")
+	gin.DefaultWriter = io.MultiWriter(file, os.Stdout)
+}
+
 func main() {
+	setupLogOutPut()
+
 	server := gin.New()
 
 	server.Use(gin.Recovery(), middlewares.Logger())
