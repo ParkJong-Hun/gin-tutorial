@@ -13,7 +13,7 @@ var (
 )
 
 func main() {
-	server := gin.Default()
+	server := gin.New()
 
 	server.Use(gin.Recovery(), middlewares.Logger())
 
