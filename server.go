@@ -10,4 +10,6 @@ func main() {
 			"message": "OK",
 		})
 	})
+
+	server.Run(":8080")
 }
