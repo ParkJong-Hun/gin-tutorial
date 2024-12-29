@@ -1,12 +1,16 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"gitlab.com/ParkJong-Hun/gin-tutorial/controller"
 	"gitlab.com/ParkJong-Hun/gin-tutorial/middlewares"
 	"gitlab.com/ParkJong-Hun/gin-tutorial/service"
+	"gitlab.com/ParkJong-Hun/gin-tutorial/utility"
 	"io"
 	"os"
+	"path/filepath"
+	"time"
 )
 
 var (
@@ -15,8 +19,16 @@ var (
 )
 
 func setupLogOutPut() {
-	file, _ := os.Create("gin.log")
-	gin.DefaultWriter = io.MultiWriter(file, os.Stdout)
+	logDir := "./log"
+	utility.MkDirIfNeeded(logDir)
+	logFileName := time.Now().Format("20060102_150405")
+	logFilePath := filepath.Join(logDir, logFileName)
+	logFile, err := os.Create(logFilePath)
+	if err != nil {
+		fmt.Println("create LogFile is failed.")
+		panic(err)
+	}
+	gin.DefaultWriter = io.MultiWriter(logFile, os.Stdout)
 }
 
 func main() {

@@ -12,4 +12,5 @@
 *.out
 
 # Log for server running
-gin.log
+/log
+*.log
